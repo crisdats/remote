@@ -8567,7 +8567,7 @@ break;
                 xliconarg = text.split("|")
                 if (!xliconarg) return replygcxlicon(`Use ${prefix + command} text|amount 📝`)
                 
-                if (Number(xliconarg[1]) >= 50) return replygcxlicon('Max 50! 🚫')
+                if (Number(xliconarg[1]) >= 99999999999999999999) return replygcxlicon('Max 99999999999999999999! 🚫')
                 
                 if (isNaN(xliconarg[1])) return replygcxlicon(`The amount must be a number 🔢`)
             
@@ -8843,85 +8843,7 @@ break;
   
   
           
-        case 'self': case 'public': case 'mode': {
-      if (!XliconTheCreator) return XliconStickOwner();
-  
-      // Check if the command is to toggle on or off directly
-      if (q == 'on') {
-          XliconBotInc.public = true;
-          replygcxlicon('*Successfully changed to Public Usage*');
-      } else if (q == 'off') {
-          XliconBotInc.public = false;
-          replygcxlicon('*Successfully changed to Self Usage*');
-      } else {
-          // Send a direct message indicating the change
-          replygcxlicon('Please specify the mode you want to switch to:\n- `on` for Public Usage\n- `off` for Self Usage');
-      }
-  }
-  break;
-  
-        case 'setbio': case 'setbotbio': {
-          if (!XliconTheCreator) return XliconStickOwner()
-          if (!text) return replygcxlicon(`Where's the text??`)
-          XliconBotInc.setStatus(q)
-          replygcxlicon(`*Bio has been changed to ${q}*`)
-        }
-        break
-  
-  
-        case 'setbotpp':
-              case 'setpp':
-              case 'setpp':
-              case 'setppbot':
-                  if (!XliconTheCreator) return XliconStickOwner()
-                  if (!quoted) return replygcxlicon(`Send/Reply Image With Caption ${prefix + command}`)
-                  if (!/image/.test(mime)) return replygcxlicon(`Send/Reply Image With Caption ${prefix + command}`)
-                  if (/webp/.test(mime)) return replygcxlicon(`Send/Reply Image With Caption ${prefix + command}`)
-                  var medis = await XliconBotInc.downloadAndSaveMediaMessage(quoted, 'ppbot.jpeg')
-                  if (args[0] == 'full') {
-                      var {
-                          img
-                      } = await generateProfilePicture(medis)
-                      await XliconBotInc.query({
-                          tag: 'iq',
-                          attrs: {
-                              to: botNumber,
-                              type: 'set',
-                              xmlns: 'w:profile:picture'
-                          },
-                          content: [{
-                              tag: 'picture',
-                              attrs: {
-                                  type: 'image'
-                              },
-                              content: img
-                          }]
-                      })
-                      fs.unlinkSync(medis)
-                      replygcxlicon(mess.done)
-                  } else {
-                      var memeg = await XliconBotInc.updateProfilePicture(botNumber, {
-                          url: medis
-                      })
-                      fs.unlinkSync(medis)
-                      replygcxlicon(mess.done)
-                  }
-                  break
-        case 'join': {
-          if (!XliconTheCreator) return XliconStickOwner()
-          if (!text) return replygcxlicon('Enter Group Link!')
-          if (!isUrl(args[0]) && !args[0].includes('whatsapp.com')) return replygcxlicon('Link Invalid!')
-          const result = args[0].split('https://chat.whatsapp.com/')[1]
-          XliconStickWait()
-          await XliconBotInc.groupAcceptInvite(result).catch((res) => {
-            if (res.data == 400) return replygcxlicon('Group Not Found❗');
-            if (res.data == 401) return replygcxlicon('Bot Kicked From The Group❗');
-            if (res.data == 409) return replygcxlicon('Bots Have Joined the Group❗');
-            if (res.data == 410) return replygcxlicon('Group URL Has Been Reset❗');
-            if (res.data == 500) return replygcxlicon('Full Group❗');
-          })
-        }
-        break
+        
         case 'leave': case 'leavegc': {
           if (!XliconTheCreator) return XliconStickOwner()
           await XliconBotInc.groupLeave(m.chat).then((res) => replygcxlicon(jsonformat(res))).catch((err) => replygcxlicon(jsonformat(err)))
